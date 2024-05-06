@@ -1,16 +1,90 @@
 <!DOCTYPE html>
+
+<!-- SpringBoot集成Vue3接入主流三方支付平台 -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 网页标签名称 -->
+    <title>continuousLight</title>
 </head>
+
+<!-- 样式 -->
+<style>
+    .art-title {
+        margin-top: 100px;
+        text-align: center;
+        font-size: 48px;
+        letter-spacing: -2px;
+        font-weight: 600;
+    }
+    .art-title span {
+        color: #54a5cc;
+        animation: continuousLight 1s ease-in-out infinite alternate;
+    }
+    @keyframes continuousLight {
+        to {
+            color: #42d392;
+        }
+    }
+    .art-title span:nth-child(n + 2) {
+        animation-delay: 0.1s;
+    }
+    .art-title span:nth-child(n + 3) {
+        animation-delay: 0.2s;
+    }
+    .art-title span:nth-child(n + 4) {
+        animation-delay: 0.3s;
+    }
+    .art-title span:nth-child(n + 5) {
+        animation-delay: 0.4s;
+    }
+    .art-title span:nth-child(n + 6) {
+        animation-delay: 0.5s;
+    }
+    .art-title span:nth-child(n + 7) {
+        animation-delay: 0.6s;
+    }
+    .art-title span:nth-child(n + 8) {
+        animation-delay: 0.7s;
+    }
+    .art-title span:nth-child(n + 9) {
+        animation-delay: 0.8s;
+    }
+    .art-title span:nth-child(n + 10) {
+        animation-delay: 0.9s;
+    }
+    .art-title span:nth-child(n + 11) {
+        animation-delay: 1.0s;
+    }
+    .art-title span:nth-child(n + 12) {
+        animation-delay: 1.1s;
+    }
+    .art-title span:nth-child(n + 13) {
+        animation-delay: 1.2s;
+    }
+</style>
+
+<!-- 网页主体 -->
 <body>
 
+<div id="tripartitePay" style="width: 80%; margin: 0 auto">
+    <div class="art-title">
+        <span>接</span>
+        <span>入</span>
+        <span>第</span>
+        <span>三</span>
+        <span>方</span>
+        <span>主</span>
+        <span>流</span>
+        <span>支</span>
+        <span>付</span>
+        <span>平</span>
+        <span>台</span>
+        <span>示</span>
+        <span>例</span>
+    </div>
+</div>
 
-<h1>
-
-  Templates目录直接访问
-
-</h1>
 </body>
 </html>
