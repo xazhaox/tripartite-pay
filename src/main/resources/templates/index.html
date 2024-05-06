@@ -30,7 +30,7 @@
 <body>
 
 <!-- 页面容器 -->
-<div id="bpmnModel" style="width: 80%; margin: 0 auto">
+<div id="tripartitePay" style="width: 80%; margin: 0 auto">
 
 </div>
 
@@ -38,7 +38,7 @@
     // 从vue里解构（导出）模块
     const {createApp, ref, reactive, toRefs} = Vue;
     // 创建应用实例
-    const bpmnModel = Vue.createApp({
+    const tripartitePay = Vue.createApp({
         /**
          * @Description 根组件选项
          */
@@ -60,12 +60,12 @@
 
     // 全局注册所有图标
     for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-        bpmnModel.component(key, component)
+        tripartitePay.component(key, component)
     }
     // 引入element-plus，{ locale: ElementPlusLocaleZhCn }引入国际化中文， 挂载VueRouter
-    bpmnModel.use(ElementPlus, {locale: ElementPlusLocaleZhCn});
+    tripartitePay.use(ElementPlus, {locale: ElementPlusLocaleZhCn});
     // 挂载应用，.mount()方法应该始终在整个应用配置和资源注册完成后被调用
-    bpmnModel.mount("#bpmnModel");
+    tripartitePay.mount("#tripartitePay");
 </script>
 
 </body>
