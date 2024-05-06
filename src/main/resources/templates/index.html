@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<!-- SpringBoot集成Vue3接入主流三方支付平台 -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 网页标签名称 -->
+    <title>Mainstream payment platform</title>
+    <!-- element-plus style -->
+    <link rel="stylesheet" href="/el/index.css"/>
+    <!-- vue v3.4.21 -->
+    <script src="/vue/vue.global.js"></script>
+    <!-- element-plus component library -->
+    <script src="/el/index.full.js"></script>
+    <!-- 国际化 -->
+    <script src="/el/zh-cn.js"></script>
+    <!-- element-plus icons -->
+    <script src="/el/index.iife.min.js"></script>
+    <!-- axios -->
+    <script src="/axios/axios.min.js"></script>
+</head>
+
+<!-- 样式 -->
+<style scoped>
+
+</style>
+
+<!-- 网页主体 -->
+<body>
+
+<!-- 页面容器 -->
+<div id="bpmnModel" style="width: 80%; margin: 0 auto">
+
+</div>
+
+<script type="application/javascript" charset="UTF-8">
+    // 从vue里解构（导出）模块
+    const {createApp, ref, reactive, toRefs} = Vue;
+    // 创建应用实例
+    const bpmnModel = Vue.createApp({
+        /**
+         * @Description 根组件选项
+         */
+        setup() {
+            // 双向绑定的响应式数据对象
+            const parameter = reactive({
+
+            })
+
+
+
+            /* 将响应式对象中的所有属性转为单独的响应式数据，如：const bpmnName = ref(""); */
+            const dataRef = toRefs(parameter);
+            return {
+                ...dataRef,
+            };
+        },
+    });
+
+    // 全局注册所有图标
+    for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+        bpmnModel.component(key, component)
+    }
+    // 引入element-plus，{ locale: ElementPlusLocaleZhCn }引入国际化中文， 挂载VueRouter
+    bpmnModel.use(ElementPlus, {locale: ElementPlusLocaleZhCn});
+    // 挂载应用，.mount()方法应该始终在整个应用配置和资源注册完成后被调用
+    bpmnModel.mount("#bpmnModel");
+</script>
+
+</body>
+</html>
