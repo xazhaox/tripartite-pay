@@ -1,5 +1,5 @@
-# tripartite-pay
+### Pay - 接入主流第三方支付平台
 
-#### 介绍
-SpringBoot集成Vue3接入主流三方支付平台
 
+
+**工厂模式结合策略模式接入主流第三方支付平台，WeChat、Alipay、UnionPay、工商银行、招商银行等...**

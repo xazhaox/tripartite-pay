@@ -23,7 +23,58 @@
 
 <!-- 样式 -->
 <style scoped>
+    .art_title {
+        margin-top: 100px;
+        text-align: center;
+        font-size: 48px;
+        letter-spacing: 6px;
+        font-weight: 600;
+        background: -webkit-linear-gradient(315deg, #42d392 25%, #647eff);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
 
+    .tripartite-pay_storehouse {
+        width: 1400px;
+        height: 488px;
+        top: 55%;
+        left: 50%;
+        margin-top: -244px;
+        margin-left: -700px;
+        text-align: left;
+        position: absolute;
+        z-index: 2;
+        background: #fff;
+        -webkit-border-radius: 12px;
+        -moz-border-radius: 12px;
+        border-radius: 12px;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#f4f4f4));
+        background-image: -webkit-linear-gradient(top, #ffffff, #f4f4f4);
+        background-image: -moz-linear-gradient(top, #ffffff 0, #f4f4f4 100%);
+        background-image: linear-gradient(-180deg, #ffffff, #f4f4f4);
+        -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
+        pointer-events: all;
+    }
+
+    .tripartite_pay_logo > div {
+        height: 162px;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+    }
+
+    .pay_tripartite_common {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 50px;
+    }
+
+    .first_line_div .pay_tripartite_common {
+        padding: 35px;
+    }
 </style>
 
 <!-- 网页主体 -->
@@ -31,7 +82,61 @@
 
 <!-- 页面容器 -->
 <div id="tripartitePay" style="width: 80%; margin: 0 auto">
+    <div class="art_title">接入第三方主流支付平台示例</div>
+    <div class="tripartite-pay_storehouse">
+        <div class="tripartite_pay_logo">
+            <!-- 第一行 -->
+            <div class="first_line_div">
+                <div class="pay_tripartite_common">
+                    <el-button type="primary" link @click="tripartitePayUnifiedInterface('WeChat')">
+                        <img style="width: 241px;" src="/images/logo/WeChat.png" alt="" srcset="">
+                    </el-button>
+                </div>
+                <div class="pay_tripartite_common">
+                    <el-button type="primary" link @click="tripartitePayUnifiedInterface('Alipay')">
+                        <img style="width: 139px" src="/images/logo/Alipay.svg" alt="" srcset="">
+                    </el-button>
+                </div>
+                <div class="pay_tripartite_common">
+                    <el-button type="primary" link @click="tripartitePayUnifiedInterface('UnionPay')">
+                        <img style="width: 224px;" src="/images/logo/UnionPay.png" alt="" srcset="">
+                    </el-button>
+                </div>
+                <div class="pay_tripartite_common">
+                    <el-button type="primary" link @click="tripartitePayUnifiedInterface('DxmPay')">
+                        <img style="width: 264px;" src="/images/logo/DxmPay.png" alt="" srcset="">
+                    </el-button>
+                </div>
+            </div>
 
+            <!-- 第二行 -->
+            <div class="second_line_div">
+                <div class="pay_tripartite_common">
+                    <el-button type="primary" link @click="tripartitePayUnifiedInterface('YunFlashPay')">
+                        <img style="width: 174px;" src="/images/logo/YunFlashPay.png" alt="" srcset="">
+                    </el-button>
+                </div>
+                <div class="pay_tripartite_common">
+                    <el-button type="primary" link @click="tripartitePayUnifiedInterface('ICBC')">
+                        <img style="width: 251px;" src="/images/logo/ICBC.png" alt="" srcset="">
+                    </el-button>
+                </div>
+                <div class="pay_tripartite_common">
+                    <el-button type="primary" link @click="tripartitePayUnifiedInterface('CMB')">
+                        <img style="width: 149px" src="/images/logo/CMB.png" alt="" srcset="">
+                    </el-button>
+                </div>
+                <div class="pay_tripartite_common">
+                    <el-button type="primary" link @click="tripartitePayUnifiedInterface('PayPal')">
+                        <img style="width: 194px;" src="/images/logo/PayPal.svg" alt="" srcset="">
+                    </el-button>
+                </div>
+            </div>
+
+            <!-- 第三行 -->
+            <div class="third_line_div"></div>
+        </div>
+    </div>
 </div>
 
 <script type="application/javascript" charset="UTF-8">
@@ -44,16 +149,72 @@
          */
         setup() {
             // 双向绑定的响应式数据对象
-            const parameter = reactive({
+            const parameter = reactive({})
 
-            })
+            /* 三方支付 */
+            const tripartitePayUnifiedInterface = (val) => {
+                if (null !== val && val !== '') {
+                    axios({
+                        method: 'post',
+                        url: '/tripartite/pay/entrance',
+                        data: {
+                            paymentPlatform: val
+                        },
+                    }).then(function (response) {
+                        // 请求成功
+                        paymentResults(response, val);
 
+                        console.log(response);
+                    }).catch(function (error) {
+                        // 请求失败
+                        ElementPlus.ElMessage({
+                            message: '请求错误，' + val + ' 平台支付出现异常.',
+                            type: 'error',
+                            plain: true,
+                        })
+                        console.log(error);
+                    });
+                } else {
+                    ElementPlus.ElMessage({
+                        message: 'Unknown，未识别第三方支付平台.',
+                        type: 'error',
+                        plain: true,
+                    })
+                }
+            }
 
+            /* 支付结果 */
+            const paymentResults = (response, val) => {
+                if (200 === response.data.code) {
+                    const returnMsg = response.data.returnMsg;
+                    if (null !== returnMsg && '' !== returnMsg) {
+                        ElementPlus.ElMessage({
+                            message: '成功，' + returnMsg,
+                            type: 'success',
+                            plain: true,
+                        })
+                    } else {
+                        ElementPlus.ElMessage({
+                            message: '成功，' + val + ' 平台支付成功.',
+                            type: 'success',
+                            plain: true,
+                        })
+                    }
+                } else {
+                    ElementPlus.ElMessage({
+                        message: '错误，' + response.data.returnMsg,
+                        type: 'error',
+                        plain: true,
+                    })
+                }
+            }
 
             /* 将响应式对象中的所有属性转为单独的响应式数据，如：const bpmnName = ref(""); */
             const dataRef = toRefs(parameter);
             return {
                 ...dataRef,
+                tripartitePayUnifiedInterface,
+                paymentResults,
             };
         },
     });
