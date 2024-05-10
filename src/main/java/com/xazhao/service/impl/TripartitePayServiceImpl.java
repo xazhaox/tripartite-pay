@@ -35,7 +35,7 @@ public class TripartitePayServiceImpl implements TripartitePayService {
     @Override
     public InvokeResult tripartitePayUnifiedInterface(Pay pay) {
 
-        String paymentPlatform = pay.paymentPlatform;
+        String paymentPlatform = pay.payType;
 
         if (StringUtils.isNotBlank(paymentPlatform)) {
             try {
@@ -43,6 +43,7 @@ public class TripartitePayServiceImpl implements TripartitePayService {
                 PayStrategy payStrategy = payStrategyFactory.getPayStrategy(paymentPlatform);
 
                 if (null == payStrategy) {
+                    log.error(paymentPlatform + " 平台未注册支付策略.");
                     return InvokeResult.failure(paymentPlatform + " 平台未注册支付策略.");
                 }
 

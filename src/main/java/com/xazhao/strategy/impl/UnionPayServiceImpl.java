@@ -20,8 +20,8 @@ public class UnionPayServiceImpl implements PayStrategy {
     @Override
     public InvokeResult pay(Pay pay) {
 
-        log.info("{} 支付.", pay.getPaymentPlatform());
+        log.info("{} 支付.", pay.getPayType());
 
-        return InvokeResult.success(null, pay.getPaymentPlatform() + " 支付.");
+        return InvokeResult.success(null, pay.getPayType() + " 支付.");
     }
 }

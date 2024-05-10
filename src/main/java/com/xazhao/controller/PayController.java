@@ -1,6 +1,7 @@
 package com.xazhao.controller;
 
 import com.xazhao.common.InvokeResult;
+import com.xazhao.core.annotation.PayAspect;
 import com.xazhao.entity.Pay;
 import com.xazhao.service.TripartitePayService;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,7 @@ public class PayController {
      * @return 支付结果
      */
     @PostMapping("/entrance")
+    @PayAspect
     public InvokeResult tripartitePay(@RequestBody Pay pay) {
 
         return tripartitePayService.tripartitePayUnifiedInterface(pay);

@@ -22,4 +22,6 @@ public class Constant {
     public final static String HTTPS = "https://";
 
     public final static String LOCAL_HOST = "127.0.0.1";
+
+    public static final String POINT_STR = ".";
 }

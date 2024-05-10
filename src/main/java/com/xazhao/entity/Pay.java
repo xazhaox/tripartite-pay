@@ -19,5 +19,5 @@ public class Pay {
     /**
      * 支付平台
      */
-    public String paymentPlatform;
+    public String payType;
 }
