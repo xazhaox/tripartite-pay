@@ -62,6 +62,7 @@ public class PayStrategyFactory implements ApplicationListener<ContextRefreshedE
      * <p/>数据来源 {@link PayStrategyFactory#enumStrategyMap}
      *
      * @param event the event to respond to
+     * @see PayStrategyFactory#enumStrategyMap
      */
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -92,6 +93,7 @@ public class PayStrategyFactory implements ApplicationListener<ContextRefreshedE
      *
      * @param payType 支付平台
      * @return 支付策略类
+     * @see PayStrategyFactory#payStrategyMap
      */
     public PayStrategy getPayStrategy(String payType) {
 
