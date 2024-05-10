@@ -9,6 +9,8 @@ import com.xazhao.strategy.PayStrategy;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import javax.annotation.Resource;
 
@@ -33,6 +35,7 @@ public class TripartitePayServiceImpl implements TripartitePayService {
      * @return 支付结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public InvokeResult tripartitePayUnifiedInterface(Pay pay) {
 
         String paymentPlatform = pay.payType;
@@ -53,6 +56,7 @@ public class TripartitePayServiceImpl implements TripartitePayService {
             } catch (Exception e) {
                 e.printStackTrace();
                 // 若有事务参与，手动回滚事务
+                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 
                 throw new ServiceException("There is an exception in the Get Pay policy.");
             }
