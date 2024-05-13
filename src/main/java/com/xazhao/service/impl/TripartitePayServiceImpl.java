@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 统一支付入口实现
@@ -38,20 +40,25 @@ public class TripartitePayServiceImpl implements TripartitePayService {
     @Transactional(rollbackFor = Exception.class)
     public InvokeResult tripartitePayUnifiedInterface(Pay pay) {
 
-        String paymentPlatform = pay.payType;
+        String payType = pay.getPayType();
 
-        if (StringUtils.isNotBlank(paymentPlatform)) {
+        if (StringUtils.isNotBlank(payType)) {
             try {
+
                 // 获取支付策略（支付平台），这里获取到的实际上是PayStrategy的实现，因为@Component的别名是在具体的策略类中实现
-                PayStrategy payStrategy = payStrategyFactory.getPayStrategy(paymentPlatform);
+                PayStrategy payStrategy = payStrategyFactory.getPayStrategy(payType);
 
                 if (null == payStrategy) {
-                    log.error(paymentPlatform + " 平台未注册支付策略.");
-                    return InvokeResult.failure(paymentPlatform + " 平台未注册支付策略.");
+                    log.error(payType + " 平台未注册支付策略.");
+                    return InvokeResult.failure(payType + " 平台未注册支付策略.");
                 }
 
+                // 返回支付平台，用于区别重定向页面到具体实现的第三方支付平台
+                Map<String, Object> resultMap = new HashMap<>(16);
+                resultMap.put("payType", payType);
+
                 // 支付
-                return payStrategy.pay(pay);
+                return payStrategy.pay(pay, resultMap);
 
             } catch (Exception e) {
                 e.printStackTrace();

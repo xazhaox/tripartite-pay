@@ -19,5 +19,10 @@ public class Pay {
     /**
      * 支付平台
      */
-    public String payType;
+    private String payType;
+
+    /**
+     * 商品ID
+     */
+    private Long productId;
 }

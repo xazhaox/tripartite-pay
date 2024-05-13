@@ -19,12 +19,15 @@
     <script src="/el/index.iife.min.js"></script>
     <!-- axios -->
     <script src="/axios/axios.min.js"></script>
+
+    <!-- 模拟生成商品ID -->
+    <script src="/js/snow-flake.js"></script>
 </head>
 
 <!-- 样式 -->
 <style scoped>
     .art_title {
-        margin-top: 100px;
+        margin-top: 68px;
         text-align: center;
         font-size: 48px;
         letter-spacing: 6px;
@@ -36,14 +39,15 @@
     }
 
     .tripartite-pay_storehouse {
-        width: 1400px;
-        height: 488px;
+        width: 1336px;
+        height: 451px;
         top: 55%;
         left: 50%;
-        margin-top: -244px;
-        margin-left: -700px;
+        margin-top: -201px;
+        margin-left: -668px;
         text-align: left;
-        position: absolute;
+        position: fixed;
+        /*position: absolute;*/
         z-index: 2;
         background: #fff;
         -webkit-border-radius: 12px;
@@ -59,7 +63,7 @@
     }
 
     .tripartite_pay_logo > div {
-        height: 162px;
+        height: 150px;
         align-items: center;
         justify-content: center;
         display: flex;
@@ -74,6 +78,11 @@
 
     .first_line_div .pay_tripartite_common {
         padding: 35px;
+    }
+
+    /* 隐藏Loading时浏览器在body中添加的一个div */
+    .el-loading-mask is-fullscreen {
+        display: none;
     }
 </style>
 
@@ -154,17 +163,41 @@
             /* 三方支付 */
             const tripartitePayUnifiedInterface = (val) => {
                 if (null !== val && val !== '') {
+                    // 开始加载，加载组件铺满整个屏幕
+                    const redirectionLoading = ElementPlus.ElLoading.service({
+                        // 是否显示动画
+                        lock: true,
+                        // 显示在加载图标下方的加载文案
+                        text: '系统正在唤起 ' + val + ' 支付平台，请稍等...',
+                        // 遮罩背景色
+                        background: 'rgba(0, 0, 0, 0.7)',
+                    })
+
+                    // 生成商品ID，productId
+                    const generatorSnowflake = new Snowflake().nextId();
+                    // 发送请求
                     axios({
                         method: 'post',
                         url: '/tripartite/pay/entrance',
                         data: {
-                            payType: val
+                            payType: val,
+                            productId: generatorSnowflake
                         },
                     }).then(function (response) {
+                        // 获取响应体
+                        const result = response.data;
                         // 请求成功
-                        paymentResults(response, val);
+                        paymentResults(result, val);
+                        // 调用第三方支付接口成功在进行重定向页面
+                        if (200 === result.code) {
+                            // 转到相应支付页面，参数为：后端返回的数据对象，Map<String, Object> resultMap
+                            redirectionTradePagePay(result.data);
+                        }
 
+                        // 关闭加载
+                        redirectionLoading.close();
                         console.log(response);
+
                     }).catch(function (error) {
                         // 请求失败
                         ElementPlus.ElMessage({
@@ -172,6 +205,8 @@
                             type: 'error',
                             plain: true,
                         })
+                        // 关闭加载
+                        redirectionLoading.close();
                         console.log(error);
                     });
                 } else {
@@ -183,10 +218,39 @@
                 }
             }
 
+            /* 重定向到相应支付页面 */
+            const redirectionTradePagePay = (result) => {
+                const payType = result.payType;
+                if ('' !== payType && null !== payType) {
+                    switch (payType) {
+                        case "Alipay":
+                            // 在浏览器执行支付返回的form表单
+                            document.write(result.actionUrl);
+                            break;
+
+                        case "WeChat":
+                            console.log('重定向支付页面，' + payType + ' 支付平台页面.');
+                            break;
+
+                        case "ICBC":
+                            console.log('重定向支付页面，' + payType + ' 支付平台页面.');
+                            break;
+
+                        default:
+                            ElementPlus.ElMessage({
+                                message: 'Unknown，重定向到 ' + payType + ' 支付平台出现异常.',
+                                type: 'error',
+                                plain: true,
+                            })
+                            break;
+                    }
+                }
+            }
+
             /* 支付结果 */
-            const paymentResults = (response, val) => {
-                if (200 === response.data.code) {
-                    const returnMsg = response.data.returnMsg;
+            const paymentResults = (result, val) => {
+                if (200 === result.code) {
+                    const returnMsg = result.returnMsg;
                     if (null !== returnMsg && '' !== returnMsg) {
                         ElementPlus.ElMessage({
                             message: '成功，' + returnMsg,
@@ -202,7 +266,7 @@
                     }
                 } else {
                     ElementPlus.ElMessage({
-                        message: '错误，' + response.data.returnMsg,
+                        message: '错误，' + result.returnMsg,
                         type: 'error',
                         plain: true,
                     })
@@ -215,6 +279,7 @@
                 ...dataRef,
                 tripartitePayUnifiedInterface,
                 paymentResults,
+                redirectionTradePagePay,
             };
         },
     });

@@ -28,6 +28,7 @@
         <maven.compiler.target>8</maven.compiler.target>
 
         <!-- 依赖包版本管理 -->
+        <alipay.version>4.39.68.ALL</alipay.version>
         <spring-boot.version>2.7.12</spring-boot.version>
         <mysql-connector.version>8.0.33</mysql-connector.version>
         <druid.version>1.2.18</druid.version>
@@ -42,6 +43,19 @@
     </properties>
 
     <dependencies>
+        <!-- alipay，阿里云支付 -->
+        <dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-sdk-java</artifactId>
+            <version>${alipay.version}</version>
+        </dependency>
+
+        <!-- spring-boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
         <!-- web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<!-- SpringBoot集成Vue3接入主流三方支付平台 -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 网页标签名称 -->
+    <title>Mainstream payment platform</title>
+    <!-- element-plus style -->
+    <link rel="stylesheet" href="/el/index.css"/>
+    <!-- vue v3.4.21 -->
+    <script src="/vue/vue.global.js"></script>
+    <!-- element-plus component library -->
+    <script src="/el/index.full.js"></script>
+    <!-- 国际化 -->
+    <script src="/el/zh-cn.js"></script>
+    <!-- element-plus icons -->
+    <script src="/el/index.iife.min.js"></script>
+    <!-- axios -->
+    <script src="/axios/axios.min.js"></script>
+
+    <!-- 模拟生成商品ID -->
+    <script src="/js/snow-flake.js"></script>
+</head>
+
+<!-- 样式 -->
+<style scoped></style>
+
+<!-- 网页主体 -->
+<body>
+
+<!-- 页面容器 -->
+<div id="tradePagePay" style="width: 80%; margin: 0 auto">
+
+    <form name="punchout_form" method="post"
+          action="https://openapi-sandbox.dl.alipaydev.com/gateway.do?charset=UTF-8&method=alipay.trade.page.pay&sign=BSIHTYbsD9DuIbZOI5ikaYy4AoG4fl9zcb7IZJ6lEjJRQ96Xa9LnSfeegOCpEaOGP5bh9nZ0Ij6VU0BZCUeBglJgM%2FQfJqgdaQdcTIj2GBAzaPz1takYKvMhglUB3Dqaekv0F9EQWZ8wCDOQIe4LcP83aKCy134p7eWQ3NC41T8wKcrG3BL4ma8GS9VmDrKA%2FSHO2r6gEa%2BRpoumHkwJZZ8mzzxadeDukgtBvO4VSxAleyH21EzirJTnCPt7H%2BnuYA4WmZx0KqtHom3eE4EIYM7TH3W40rZZLuEDDQMsXnuX1cWI7iipkIe4yfenwo4RhtPakyQWtC%2BjtlpxogKaRg%3D%3D&version=1.0&app_id=9021000136688404&sign_type=RSA2&timestamp=2024-05-13+11%3A32%3A18&alipay_sdk=alipay-sdk-java-4.39.68.ALL&format=json">
+        <input type="hidden" name="biz_content" value="{" time_expire":"2024-05-13
+        11:37:15","extend_params":{"sys_service_provider_id":"2088721035353791"},"out_trade_no":3579722369922555904,"total_amount":0.1,"subject":"安安实验室支付订单","product_code":"FAST_INSTANT_TRADE_PAY","goods_detail":[{"goods_name":"子订单A","quantity":1,"price":0.2,"goods_id":1789861200712351744},{"goods_name":"子订单B","quantity":1,"price":0.3,"goods_id":1789861200712351745}]}">
+        <input type="submit" value="立即支付" style="display:none">
+    </form>
+    <script>document.forms[0].submit();</script>
+
+</div>
+
+<script type="application/javascript" charset="UTF-8">
+
+</script>
+
+</body>
+</html>

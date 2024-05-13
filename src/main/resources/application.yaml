@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: tripartite-pay
+  # 支付功能相关参数配置文件，application-pay.yaml后缀为pay
+  profiles:
+    active: pay
   web:
     resources:
       # templates目录下的文件无法直接访问，需要在static-locations中加入templates
