@@ -2,6 +2,7 @@ package com.xazhao.core.aspect;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.json.JSONUtil;
+import com.xazhao.constant.PayConventions;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -22,12 +23,7 @@ import java.util.Map;
 @Slf4j
 @Aspect
 @Component
-public class PaySurroundAspect {
-
-    /**
-     * 支付平台类型，约定而定（不可改）
-     */
-    public static final String PAY_TYPE = "payType";
+public class PaySurroundAspect implements PayConventions {
 
     /**
      * 配置切入点，@Pointcut切入点表达式，使用@PayAspect注解标识的方法都会进行切入，也可以用通配符配置具体切入的方法名

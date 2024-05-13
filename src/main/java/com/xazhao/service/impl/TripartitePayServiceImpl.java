@@ -1,6 +1,7 @@
 package com.xazhao.service.impl;
 
 import com.xazhao.common.InvokeResult;
+import com.xazhao.constant.PayConventions;
 import com.xazhao.entity.Pay;
 import com.xazhao.exception.ServiceException;
 import com.xazhao.factory.PayStrategyFactory;
@@ -25,7 +26,7 @@ import java.util.Map;
 
 @Slf4j
 @Service
-public class TripartitePayServiceImpl implements TripartitePayService {
+public class TripartitePayServiceImpl implements TripartitePayService, PayConventions {
 
     @Resource
     private PayStrategyFactory payStrategyFactory;
@@ -55,7 +56,7 @@ public class TripartitePayServiceImpl implements TripartitePayService {
 
                 // 返回支付平台，用于区别重定向页面到具体实现的第三方支付平台
                 Map<String, Object> resultMap = new HashMap<>(16);
-                resultMap.put("payType", payType);
+                resultMap.put(PAY_TYPE, payType);
 
                 // 支付
                 return payStrategy.pay(pay, resultMap);
