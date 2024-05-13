@@ -15,4 +15,9 @@ public interface PayConventions {
      */
     String PAY_TYPE = "payType";
 
+    /**
+     * 重定向form表单字段名称
+     */
+    String ACTION_URL = "actionUrl";
+
 }

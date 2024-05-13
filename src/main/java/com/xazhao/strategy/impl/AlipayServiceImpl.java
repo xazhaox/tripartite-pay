@@ -11,6 +11,7 @@ import com.alipay.api.response.AlipayTradePagePayResponse;
 import com.xazhao.common.InvokeResult;
 import com.xazhao.constant.Constant;
 import com.xazhao.constant.PayConstant;
+import com.xazhao.constant.PayConventions;
 import com.xazhao.core.config.AlipayClientConfig;
 import com.xazhao.core.config.AlipayProperties;
 import com.xazhao.entity.Pay;
@@ -37,7 +38,7 @@ import java.util.Map;
 
 @Slf4j
 @Component("Alipay")
-public class AlipayServiceImpl implements PayStrategy {
+public class AlipayServiceImpl implements PayStrategy, PayConventions {
 
     /**
      * Alipay支付默认金额，注意：这里以分位单位默认10分，0.1元
@@ -70,7 +71,7 @@ public class AlipayServiceImpl implements PayStrategy {
         log.info("{} 支付.", pay.getPayType());
 
         String formActionUrl = this.tradePagePay(pay);
-        resultMap.put("actionUrl", formActionUrl);
+        resultMap.put(ACTION_URL, formActionUrl);
 
         return InvokeResult.success(resultMap, pay.getPayType() + " 支付.");
     }
