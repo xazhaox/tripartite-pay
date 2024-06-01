@@ -28,7 +28,7 @@
         <maven.compiler.target>8</maven.compiler.target>
 
         <!-- 依赖包版本管理 -->
-        <alipay.version>4.39.68.ALL</alipay.version>
+        <alipay.version>4.39.79.ALL</alipay.version>
         <spring-boot.version>2.7.12</spring-boot.version>
         <mysql-connector.version>8.0.33</mysql-connector.version>
         <druid.version>1.2.18</druid.version>
@@ -38,7 +38,7 @@
         <lombok.version>1.18.8</lombok.version>
         <apache-commons.version>3.12.0</apache-commons.version>
         <hutool-all.version>5.8.18</hutool-all.version>
-        <fastjson.version>1.2.8</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <persistence.version>1.0</persistence.version>
     </properties>
 
@@ -176,6 +176,18 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <!-- 生成文档 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <!-- 配置插件的其他参数，例如生成文档的目录等 -->
+                    <outputDirectory>tripartite-pay/site</outputDirectory>
+                    <!-- 字符集 -->
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <charset>${project.build.sourceEncoding}</charset>
+                </configuration>
             </plugin>
         </plugins>
     </build>

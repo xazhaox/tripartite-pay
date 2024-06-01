@@ -1,0 +1,24 @@
+{
+  "time_expire": "2024-05-13 11:37:15",
+  "extend_params": {
+    "sys_service_provider_id": "2088721035353791"
+  },
+  "out_trade_no": 3579722369922555904,
+  "total_amount": 0.1,
+  "subject": "安安实验室支付订单",
+  "product_code": "FAST_INSTANT_TRADE_PAY",
+  "goods_detail": [
+    {
+      "goods_name": "子订单A",
+      "quantity": 1,
+      "price": 0.2,
+      "goods_id": 1789861200712351744
+    },
+    {
+      "goods_name": "子订单B",
+      "quantity": 1,
+      "price": 0.3,
+      "goods_id": 1789861200712351745
+    }
+  ]
+}
